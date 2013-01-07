@@ -5,6 +5,7 @@ import java.util.ArrayList; // array
 public class program {
 	public static Rule createLineFrom(String rule){
 		// CREATE scanner 'object' and result 'object'
+		@SuppressWarnings("resource")
 		Scanner ruleScan = new Scanner(rule);
 		Rule result = new Rule();
 		
@@ -95,6 +96,7 @@ public class program {
 			System.out.println("Wrong input. Closing...");
 			System.exit(0);
 		}
+		keyboard.close();
 		return text;
 	}
 	public static boolean validate (Rule line){
@@ -191,6 +193,7 @@ public class program {
 			System.out.println("Wrong tape composition. Closing...");
 			System.exit(0);
 		}
+		keyboard.close();
 		return tape;
 	}
 	public static void turingMachine(ArrayList<Rule> ruleList, ArrayList<Character> tape){
