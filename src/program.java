@@ -36,21 +36,6 @@ public class program {
 			} catch (Exception e) {}
 		}
 	}
-	public static Rule createLineFrom(String rule){
-		// CREATE scanner 'object' and result 'object'
-		Scanner ruleScan = new Scanner(rule);
-		Rule result = new Rule();
-		
-		// PARSE rules from 'string' to 'object'
-		result.q = Integer.parseInt(ruleScan.next());
-		result.e = ruleScan.next().charAt(0);
-		result.p = Integer.parseInt(ruleScan.next());
-		result.f = ruleScan.next().charAt(0);
-		result.m = Integer.parseInt(ruleScan.next());
-		
-		// RETURN result 'object'
-		return result;
-	}
 	public static void parseFileTo(ArrayList<Rule> ruleList){
 		// CREATE scanner 'object', line 'string', line count 'int' and rule count 'int'
 		Scanner scannedFile = null;
@@ -110,6 +95,21 @@ public class program {
 			System.exit(0);
 		}
 		return text;
+	}
+	public static Rule createLineFrom(String rule){
+		// CREATE scanner 'object' and result 'object'
+		Scanner ruleScan = new Scanner(rule);
+		Rule result = new Rule();
+		
+		// PARSE rules from 'string' to 'object'
+		result.q = Integer.parseInt(ruleScan.next());
+		result.e = ruleScan.next().charAt(0);
+		result.p = Integer.parseInt(ruleScan.next());
+		result.f = ruleScan.next().charAt(0);
+		result.m = Integer.parseInt(ruleScan.next());
+		
+		// RETURN result 'object'
+		return result;
 	}
 	public static boolean validate (Rule line){
 		int q = line.q;
