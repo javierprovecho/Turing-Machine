@@ -3,21 +3,38 @@ import java.util.Scanner; // parser
 import java.util.ArrayList; // array
 
 public class program {
-	public static Rule createLineFrom(String rule){
-		// CREATE scanner 'object' and result 'object'
-		@SuppressWarnings("resource")
-		Scanner ruleScan = new Scanner(rule);
-		Rule result = new Rule();
+	public static void main(String[] Args){
+		// TITLE
+		title();
 		
-		// PARSE rules from 'string' to 'object'
-		result.q = Integer.parseInt(ruleScan.next());
-		result.e = ruleScan.next().charAt(0);
-		result.p = Integer.parseInt(ruleScan.next());
-		result.f = ruleScan.next().charAt(0);
-		result.m = Integer.parseInt(ruleScan.next());
+		// CREATE rule list 'array' and tape 'array'
+		ArrayList<Rule> ruleList = new ArrayList<Rule>();
+		ArrayList<Character> tape = new ArrayList<Character>();
 		
-		// RETURN result 'object'
-		return result;
+		// READ rules from file, VALIDATE line by line and WRITE to rule list 'array'
+		parseFileTo(ruleList);
+	
+		// VALIDATE rule list array
+		validate(ruleList);
+	
+		// ASK initial tape and WRITE it to tape 'array'
+		System.out.println(askInitialTape(tape));
+		
+		// EXECUTE turing machine
+		turingMachine(ruleList, tape);
+	}
+	public static void title() {
+		// TODO Auto-generated method stub
+		Scanner file = null;
+		try {
+			file = new Scanner(new File("text.txt"));
+		} catch (Exception e){}
+		while(file.hasNextLine()){
+			System.out.println(file.nextLine());
+			try {
+				Thread.sleep(100);
+			} catch (Exception e) {}
+		}
 	}
 	public static void parseFileTo(ArrayList<Rule> ruleList){
 		// CREATE scanner 'object', line 'string', line count 'int' and rule count 'int'
@@ -61,25 +78,7 @@ public class program {
 			System.out.println("Coudn't read file. Closing...");
 			System.exit(0);
 		}
-	}
-	public static void main(String[] Args){
-		text();
-		
-		// CREATE rule list 'array' and tape 'array'
-		ArrayList<Rule> ruleList = new ArrayList<Rule>();
-		ArrayList<Character> tape = new ArrayList<Character>();
-		
-		// READ rules from file, VALIDATE line by line and WRITE to rule list 'array'
-		parseFileTo(ruleList);
-
-		// VALIDATE rule list array
-		validate(ruleList);
-
-		// ASK initial tape and WRITE it to tape 'array'
-		System.out.println(askInitialTape(tape));
-		
-		// EXECUTE turing machine
-		turingMachine(ruleList, tape);
+		scannedFile.close();
 	}
 	public static String askFilePath(){
 		Scanner keyboard = new Scanner(System.in);
@@ -98,6 +97,22 @@ public class program {
 		}
 		keyboard.close();
 		return text;
+	}
+	public static Rule createLineFrom(String rule){
+		// CREATE scanner 'object' and result 'object'
+		@SuppressWarnings("resource")
+		Scanner ruleScan = new Scanner(rule);
+		Rule result = new Rule();
+		
+		// PARSE rules from 'string' to 'object'
+		result.q = Integer.parseInt(ruleScan.next());
+		result.e = ruleScan.next().charAt(0);
+		result.p = Integer.parseInt(ruleScan.next());
+		result.f = ruleScan.next().charAt(0);
+		result.m = Integer.parseInt(ruleScan.next());
+		
+		// RETURN result 'object'
+		return result;
 	}
 	public static boolean validate (Rule line){
 		int q = line.q;
@@ -261,18 +276,5 @@ public class program {
 	}
 	public static void renderTape(ArrayList<Character> tape, int turingMachineStep){
 		
-	}
-	public static void text() {
-		// TODO Auto-generated method stub
-		Scanner file = null;
-		try {
-			file = new Scanner(new File("text.txt"));
-		} catch (Exception e){}
-		while(file.hasNextLine()){
-			System.out.println(file.nextLine());
-			try {
-				Thread.sleep(100);
-			} catch (Exception e) {}
-		}
 	}
 }
