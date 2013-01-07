@@ -3,6 +3,39 @@ import java.util.Scanner; // parser
 import java.util.ArrayList; // array
 
 public class program {
+	public static void main(String[] Args){
+		// TITLE
+		title();
+		
+		// CREATE rule list 'array' and tape 'array'
+		ArrayList<Rule> ruleList = new ArrayList<Rule>();
+		ArrayList<Character> tape = new ArrayList<Character>();
+		
+		// READ rules from file, VALIDATE line by line and WRITE to rule list 'array'
+		parseFileTo(ruleList);
+	
+		// VALIDATE rule list array
+		validate(ruleList);
+	
+		// ASK initial tape and WRITE it to tape 'array'
+		System.out.println(askInitialTape(tape));
+		
+		// EXECUTE turing machine
+		turingMachine(ruleList, tape);
+	}
+	public static void title() {
+		// TODO Auto-generated method stub
+		Scanner file = null;
+		try {
+			file = new Scanner(new File("text.txt"));
+		} catch (Exception e){}
+		while(file.hasNextLine()){
+			System.out.println(file.nextLine());
+			try {
+				Thread.sleep(100);
+			} catch (Exception e) {}
+		}
+	}
 	public static Rule createLineFrom(String rule){
 		// CREATE scanner 'object' and result 'object'
 		Scanner ruleScan = new Scanner(rule);
@@ -60,25 +93,6 @@ public class program {
 			System.out.println("Coudn't read file. Closing...");
 			System.exit(0);
 		}
-	}
-	public static void main(String[] Args){
-		text();
-		
-		// CREATE rule list 'array' and tape 'array'
-		ArrayList<Rule> ruleList = new ArrayList<Rule>();
-		ArrayList<Character> tape = new ArrayList<Character>();
-		
-		// READ rules from file, VALIDATE line by line and WRITE to rule list 'array'
-		parseFileTo(ruleList);
-
-		// VALIDATE rule list array
-		validate(ruleList);
-
-		// ASK initial tape and WRITE it to tape 'array'
-		System.out.println(askInitialTape(tape));
-		
-		// EXECUTE turing machine
-		turingMachine(ruleList, tape);
 	}
 	public static String askFilePath(){
 		Scanner keyboard = new Scanner(System.in);
@@ -258,18 +272,5 @@ public class program {
 	}
 	public static void renderTape(ArrayList<Character> tape, int turingMachineStep){
 		
-	}
-	public static void text() {
-		// TODO Auto-generated method stub
-		Scanner file = null;
-		try {
-			file = new Scanner(new File("text.txt"));
-		} catch (Exception e){}
-		while(file.hasNextLine()){
-			System.out.println(file.nextLine());
-			try {
-				Thread.sleep(100);
-			} catch (Exception e) {}
-		}
 	}
 }
