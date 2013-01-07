@@ -1,10 +1,10 @@
-import java.io.File; // reader
-import java.util.Scanner; // parser
-import java.util.ArrayList; // array
+import java.io.File; // READER
+import java.util.Scanner; // PARSER
+import java.util.ArrayList; // ARRAY
 
 public class program {
 	public static void main(String[] Args){
-		// TITLE
+		// PRINT title
 		title();
 		
 		// CREATE rule list 'array' and tape 'array'
@@ -18,22 +18,22 @@ public class program {
 		validate(ruleList);
 	
 		// ASK initial tape and WRITE it to tape 'array'
-		System.out.println(askInitialTape(tape));
+		askInitialTape(tape);
 		
 		// EXECUTE turing machine
 		turingMachine(ruleList, tape);
 	}
 	public static void title() {
+		// CREATE scanner 'object'
 		Scanner file = null;
-		try {
+		
+		// PRINT title
+		try{
 			file = new Scanner(new File("text.txt"));
-		} catch (Exception e){}
-		while(file.hasNextLine()){
-			System.out.println(file.nextLine());
-			try {
-				Thread.sleep(100);
-			} catch (Exception e) {}
-		}
+			while(file.hasNextLine()){
+				System.out.println(file.nextLine());
+			}	
+		}catch (Exception e){}
 	}
 	public static void parseFileTo(ArrayList<Rule> ruleList){
 		// CREATE scanner 'object', line 'string', line count 'int' and rule count 'int'
@@ -80,7 +80,6 @@ public class program {
 		scannedFile.close();
 	}
 	public static String askFilePath(){
-		@SuppressWarnings("resource")
 		Scanner keyboard = new Scanner(System.in);
 		System.out.print("\n\nType path for rule list's file and press 'Enter'. (Default: rules.txt) : ");
 		String text = null;
@@ -89,7 +88,7 @@ public class program {
 			if(text.length()==0){
 				text = "rules.txt";
 			}
-			System.out.println("You choose '"+text+"' .");
+			System.out.println("You choose '"+text+"' .\n");
 		}
 		catch(Exception e){
 			System.out.println("Wrong input. Closing...");
@@ -99,7 +98,6 @@ public class program {
 	}
 	public static Rule createLineFrom(String rule){
 		// CREATE scanner 'object' and result 'object'
-		@SuppressWarnings("resource")
 		Scanner ruleScan = new Scanner(rule);
 		Rule result = new Rule();
 		
@@ -162,7 +160,7 @@ public class program {
 			System.exit(0);
 		}
 		
-		System.out.println("\nEverything seems okay.");
+		System.out.println("\nEverything seems okay.\n");
 		
 /*		// STEP 4 - CHECK STATUS CONTINUITY
 		index = -1
@@ -185,8 +183,7 @@ public class program {
 			}
 		}*/
 	}
-	public static ArrayList<Character> askInitialTape(ArrayList<Character> tape){
-		@SuppressWarnings("resource")
+	public static void askInitialTape(ArrayList<Character> tape){
 		Scanner keyboard = new Scanner(System.in);
 		System.out.print("Type initial tape composition and press 'Enter' : ");
 		String text = null;
@@ -208,27 +205,47 @@ public class program {
 			System.out.println("Wrong tape composition. Closing...");
 			System.exit(0);
 		}
-		return tape;
 	}
+	public static boolean askExecutionType(){
+		Scanner keyboard = new Scanner(System.in);
+		String text = null;
+		System.out.print("Type execution type ('s' for STEP or 'f' for FAST) and press 'Enter'.  (Default: FAST) : ");
+		// true is STEP
+		// false is FAST
+		text = keyboard.nextLine();
+		if (text.indexOf("s") == 0){
+			return true;
+		}else if(text.indexOf("f") == 0){
+			return false;
+		}else if (text.length() == 0){
+			return true;
+		}else{
+			System.out.println("Wrong type. Closing...");
+			System.exit(0);
+		}
+		return false;
+	}
+	@SuppressWarnings("null")
 	public static void turingMachine(ArrayList<Rule> ruleList, ArrayList<Character> tape){
 		// CREATE and SETUP initial variables
+		Scanner keyboard = new Scanner(System.in);
 		int headPosition = 0;
 		int turingMachineStatus = 1;
 		int turingMachineStep = 0;
+		boolean step = askExecutionType();
 		
 		// START loop until 'status = 0' (halted)
-		while(turingMachineStatus != 0){
+		while(true){
 			// SEARCH for rule
-			try{
-				
-				
+			try{		
+				// CHECK if there is space avalaible
 				try{
 					tape.get(headPosition);
 				}catch(Exception e){
 					tape.add(headPosition, ' ');
 				}
 				
-				
+				// LOOP through ruleList 'array'
 				int index = -1;
 				for (int i = 0; i < ruleList.size(); i++){
 					if (ruleList.get(i).e == tape.get(headPosition) && ruleList.get(i).q == turingMachineStatus) {
@@ -239,9 +256,11 @@ public class program {
 			
 				// EXCEPTION if rule not found for 'q' and 'e'
 				if (index == -1){
-					System.out.println("\nNo rule found for q = "+turingMachineStatus+" and e = "+tape.get(headPosition));
-					System.out.println("\nHalted! Closing...");
-					System.exit(0);
+					if(step == true){
+						System.out.println("\nNo rule found for q = "+turingMachineStatus+" and e = "+tape.get(headPosition));
+					}
+					Exception e = null;
+					throw e;
 				}
 				
 				// EXCEPTION if tape 'array' is too short
@@ -258,22 +277,23 @@ public class program {
 					headPosition = 0;
 				}
 				
-				// RENDER (temporal)
-				turingMachineStep++;
-				System.out.println(tape+"     "+turingMachineStep);
-				//Thread.sleep(100);
+				// WAIT if step mode is 'true' and render step by step
+				if (step == true){
+					System.out.println(tape+"     "+turingMachineStep);
+					keyboard.nextLine();
+				}
 			}catch(Exception e){
-				System.out.println("\nHalted! Closing...");
+				if(step == false){
+					renderTape(tape, turingMachineStep, step);
+					System.out.println(tape+"     \nSteps: "+turingMachineStep);
+				}else{
+					System.out.println("\nHalted! Closing...");
+				}
 				System.exit(0);
 			}
-			
-			// RENDER tape
-			//renderTape(tape, turingMachineStep);
 		}
-		//System.out.println(tape);
-		//System.out.println("\nHalted! Closing...");
 	}
-	public static void renderTape(ArrayList<Character> tape, int turingMachineStep){
+	public static void renderTape(ArrayList<Character> tape, int turingMachineStep, boolean step){
 		
 	}
 }
