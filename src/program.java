@@ -24,7 +24,6 @@ public class program {
 		turingMachine(ruleList, tape);
 	}
 	public static void title() {
-		// TODO Auto-generated method stub
 		Scanner file = null;
 		try {
 			file = new Scanner(new File("text.txt"));
@@ -81,6 +80,7 @@ public class program {
 		scannedFile.close();
 	}
 	public static String askFilePath(){
+		@SuppressWarnings("resource")
 		Scanner keyboard = new Scanner(System.in);
 		System.out.print("\n\nType path for rule list's file and press 'Enter'. (Default: rules.txt) : ");
 		String text = null;
@@ -95,7 +95,6 @@ public class program {
 			System.out.println("Wrong input. Closing...");
 			System.exit(0);
 		}
-		keyboard.close();
 		return text;
 	}
 	public static Rule createLineFrom(String rule){
@@ -187,6 +186,7 @@ public class program {
 		}*/
 	}
 	public static ArrayList<Character> askInitialTape(ArrayList<Character> tape){
+		@SuppressWarnings("resource")
 		Scanner keyboard = new Scanner(System.in);
 		System.out.print("Type initial tape composition and press 'Enter' : ");
 		String text = null;
@@ -208,7 +208,6 @@ public class program {
 			System.out.println("Wrong tape composition. Closing...");
 			System.exit(0);
 		}
-		keyboard.close();
 		return tape;
 	}
 	public static void turingMachine(ArrayList<Rule> ruleList, ArrayList<Character> tape){
