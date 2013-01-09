@@ -48,5 +48,6 @@ public class BugRunner
         world.add(new Location(0, 2), new Bug());
         world.add(new Location(0, 3), new Bug());
         world.add(new Location(0, 4), new Bug());
+        world.show();
     }
 }
