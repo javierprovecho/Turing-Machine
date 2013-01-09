@@ -32,6 +32,9 @@ public class program {
 			file = new Scanner(new File("text.txt"));
 			while(file.hasNextLine()){
 				System.out.println(file.nextLine());
+				//try{
+				//	Thread.sleep
+				//}
 			}	
 		}catch (Exception e){}
 	}
@@ -242,7 +245,7 @@ public class program {
 				try{
 					tape.get(headPosition);
 				}catch(Exception e){
-					tape.add(headPosition, ' ');
+					tape.add(headPosition, 'h');
 				}
 				
 				// LOOP through ruleList 'array'
@@ -264,7 +267,11 @@ public class program {
 				}
 				
 				// EXCEPTION if tape 'array' is too short
-				
+				try{
+					tape.get(headPosition);
+				}catch(Exception e){
+					tape.add(headPosition, 'h');
+				}
 			
 				// APPLY rule
 				tape.set(headPosition, ruleList.get(index).f);
@@ -276,6 +283,9 @@ public class program {
 					tape.add(0, ' ');
 					headPosition = 0;
 				}
+				
+				// ADD +1 to step count
+				turingMachineStep++;
 				
 				// WAIT if step mode is 'true' and render step by step
 				if (step == true){
