@@ -19,8 +19,8 @@ import info.gridworld.actor.Actor;
 import info.gridworld.actor.ActorWorld;
 import info.gridworld.actor.Bug;
 import info.gridworld.actor.Rock;
-import info.gridworld.grid.BoundedGrid;
 import info.gridworld.grid.Location;
+import info.gridworld.grid.UnboundedGrid;
 
 /**
  * This class runs a world that contains a bug and a rock, added at random
@@ -34,8 +34,8 @@ public class BugRunner
 {
     public static void main(String[] args)
     {
-    	ActorWorld world = new ActorWorld(new BoundedGrid<Actor>(2, 10));
-        world.add(new Location(1, 1), new Bug());
+    	ActorWorld world = new ActorWorld(new UnboundedGrid<Actor>());
+    	world.add(new Location(1, 1), new Bug());
         world.add(new Location(1, 2), new Bug());
         world.add(new Location(1, 3), new Bug());
         world.add(new Location(1, 4), new Bug());
