@@ -1,5 +1,5 @@
 /*
- * 		TURING MACHINE 
+ * 		[README] TURING MACHINE - turing.main.program
  * 
  * 		------------------------------------------------------------------------------------
  * 
@@ -32,29 +32,46 @@
  * 			- Text mode
  * 			- Graphical mode (GRIDWORLD adaptation)
  * 	
- * 		
+ * 		------------------------------------------------------------------------------------
+ * 
+ * 		Imports:
+ * 
+ * 		java.io.File						as file reader
+ * 		java.util.ArrayList 				as array constructor
+ * 		java.util.Scanner					as file scanner and input reader/scanner
+ * 		turing.addons.Rule					as custom object for rule data
+ * 		turing.gridworld.*					as custom classes of GridWorld
+ * 		info.gridworld.actor.Actor			GridWorld related
+ * 		info.gridworld.actor.ActorWorld		GridWorld related
+ * 		info.gridworld.grid.Location		GridWorld related
+ * 		info.gridworld.grid.UnboundedGrid	GridWorld related
+ * 
+ * 		------------------------------------------------------------------------------------
+ * 
+ * 		Default program description:
+ * 
+ * 		1 1 1 0 1
+ * 		1 0 1 1 1
+ * 
+ * 		This program runs from left to right, converting 0 to 1 and viceversa. It halts when
+ * 		it reaches any symbol different of 0 or 1.
+ * 
+ * 		------------------------------------------------------------------------------------
  */
 
 package turing.main;
-
-/*
- * Imports:
- * 
- * 		java.io.File			as file reader
- * 		java.util.ArrayList 	as array constructor
- * 		java.util.Scanner		as file scanner and input reader/scanner
- * 		turing.addons.Rule		as custom object for rule data
- */
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 import turing.addons.Rule;
-
+import turing.gridworld.*;
+import info.gridworld.actor.Actor;
+import info.gridworld.actor.ActorWorld;
+import info.gridworld.grid.Location;
+import info.gridworld.grid.UnboundedGrid;
 public class program {
 	public static ArrayList<Rule> ruleList;
 	public static ArrayList<Character> tape;
-	
 	public static void main(String[] Args){
 		
 		/*
@@ -106,12 +123,16 @@ public class program {
 		
 			try{
 				Scanner title = new Scanner(Rule.class.getResourceAsStream("/turing/addons/title.txt"));
+				String text;
 				while(title.hasNextLine()){
-					System.out.println(title.nextLine());
+					text = title.nextLine();
+					if(text.charAt(0) != '/'){
+						System.out.println(text);
+					}
 				}
-				title.close(); title = null;
+				title.close(); title = null; text = null;
 			}catch (Exception e){}
-			
+
 	}
 	public static void parseFileTo(){
 		
@@ -120,7 +141,7 @@ public class program {
 		 */
 			
 			Scanner scannedFile = null;
-			String lineAsString;
+			String lineAsString, path;
 			int l = 0, r = 0;
 			Rule line = null;
 		
@@ -131,7 +152,13 @@ public class program {
 		 */
 			
 			try{
-				scannedFile = new Scanner(new File(askFilePath()));
+				path = askFilePath();
+				if(!path.equals("DEFAULT")){
+					scannedFile = new Scanner(new File(path));
+				}else{
+					scannedFile = new Scanner(Rule.class.getResourceAsStream("/turing/addons/rules.txt"));
+				}
+				
 			}catch(Exception e1){
 				System.out.println("File not found. Closing...");
 				System.exit(0);
@@ -195,7 +222,7 @@ public class program {
 			try{
 				text = keyboard0.nextLine();
 				if(text.length()==0){
-					text = "rules.txt";
+					text = "DEFAULT";
 				}
 				System.out.println("You choose '"+text+"' .\n");
 			}
@@ -234,7 +261,7 @@ public class program {
 		 * Else return false.
 		 */
 		
-			if(line.q >= 1 && "01abxyh".indexOf(line.e) != -1 && line.p >= 0 && "01abxyh".indexOf(line.f) != -1 && (line.m == 1 || line.m == -1)) return true;
+			if(line.q >= 1 && line.q <= 50 && "01abxyh".indexOf(line.e) != -1 && line.p >= 1 && line.p <= 50 && "01abxyh".indexOf(line.f) != -1 && (line.m == 1 || line.m == -1)) return true;
 			else return false;
 			
 	}
@@ -298,11 +325,6 @@ public class program {
 			System.out.print("Type initial tape composition and press 'Enter' : ");
 			try{
 				text = keyboard.next();
-				if (text.length() != 0){
-					for(int i = 0; i<=9; i++){
-						tape.add('h');
-					}
-				}
 				for (int i=0; i <= text.length()-1; i++){
 					if(text.charAt(i)==' '){
 						text = text.substring(0, i) + 'h' + text.substring(i + 1);
@@ -312,9 +334,6 @@ public class program {
 						System.exit(0);
 					}
 					tape.add(text.charAt(i));
-				}
-				for(int i = 0; i<(9+text.length()); i++){
-					tape.add('h');
 				}
 			}
 			catch(Exception e){
@@ -351,7 +370,7 @@ public class program {
 			}else if(text.equals("g")){
 				return false;
 			}else if (text.length() == 0){
-				return false;
+				return true;
 			}else{
 				System.out.println("Wrong type. Closing...");
 				System.exit(0); text = null; return false;
@@ -365,7 +384,7 @@ public class program {
 		 */
 		
 			Scanner keyboard = new Scanner(System.in);
-			int headPosition = 10, turingMachineStatus = 1, turingMachineStep = 0;
+			int headPosition = 0, turingMachineStatus = 1, turingMachineStep = 0;
 			boolean step = askExecutionType();
 		
 		/*
@@ -421,7 +440,7 @@ public class program {
 					 */
 						
 						if(headPosition == -1){
-							tape.add(0, ' ');
+							tape.add(0, 'h');
 							headPosition = 0;
 						}
 					
@@ -497,5 +516,45 @@ public class program {
 	}
 	public static void turingMachineGridWorldMode(){
 		
+		/*
+		 * Create world
+		 */
+		
+			ActorWorld world = new ActorWorld(new UnboundedGrid<Actor>());
+
+		/*
+		 * Fill world
+		 */
+			
+			for(int i = 0; i<tape.size(); i++){
+	    		if(tape.get(i) == '0'){
+	    			world.add(new Location(0, i), new Symbol_0());
+	    		} else if (tape.get(i) == '1'){
+	    			world.add(new Location(0, i), new Symbol_1());
+	    		} else if (tape.get(i) == 'a'){
+	    			world.add(new Location(0, i), new Symbol_a());
+	    		} else if (tape.get(i) == 'b'){
+	    			world.add(new Location(0, i), new Symbol_b());
+	    		} else if (tape.get(i) == 'h'){
+	    			world.add(new Location(0, i), new Symbol_h());
+	    		} else if (tape.get(i) == 'x'){
+	    			world.add(new Location(0, i), new Symbol_x());
+	    		} else if (tape.get(i) == 'y'){
+	    			world.add(new Location(0, i), new Symbol_y());
+	    		}
+			}
+			
+		/*
+		 * Create head
+		 */
+
+	        world.add(new Location(1, 0), new Head(ruleList));
+	        
+	    /*
+	     * Show world
+	     */
+	        
+	        world.show();
+	        
 	}
 }
