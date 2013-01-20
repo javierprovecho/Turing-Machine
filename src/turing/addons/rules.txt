@@ -6,7 +6,7 @@
 / 		Developed and in-line comented by Javier Provecho Fernandez.
 / 			1st Grade Student of Computer Science at University of Valladolid, Spain.
 / 		
-/ 		Documented by Alejandro Gracia Gutierrez.
+/ 		Documented by Alejandro Garcia Gutierrez.
 / 			1st Grade Student of Computer Science at University of Valladolid, Spain.
 / 
 / 		Documentation avalaible at:
