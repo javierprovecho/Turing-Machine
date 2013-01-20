@@ -89,10 +89,12 @@ public class program {
 			askInitialTape();
 		
 		/*
-		 * Call textMode method
+		 * Call askTuringMachineMode and depending if it is TRUE or
+		 * FALSE, execute TextMode or GridWorldMode.
 		 */
-	
-			turingMachineTextMode();
+			
+			if(askTuringMachineMode()) turingMachineTextMode();
+			else turingMachineGridWorldMode();
 			
 	}
 	public static void title() {
@@ -327,6 +329,35 @@ public class program {
 				keyboard = null; text = null;
 				
 	}
+	public static boolean askTuringMachineMode(){
+		
+		/*
+		 * Create initial objects and variables
+		 */
+		
+			Scanner keyboard = new Scanner(System.in); String text = null;
+			
+		/*
+		 * Ask user execution type, close resources and return boolean.
+		 * TRUE=t
+		 * FALSE=g
+		 */
+			
+			System.out.print("\nType mode type ('t' for TextMode or 'g' for GridWorldMode) and press 'Enter'.  (Default: TextMode) : ");
+			text = keyboard.nextLine();
+			keyboard = null;
+			if (text.equals("t")){
+				return true;
+			}else if(text.equals("g")){
+				return false;
+			}else if (text.length() == 0){
+				return false;
+			}else{
+				System.out.println("Wrong type. Closing...");
+				System.exit(0); text = null; return false;
+			}
+			
+	}
 	public static void turingMachineTextMode(){
 		
 		/*
@@ -452,9 +483,9 @@ public class program {
 			System.out.print("\nType execution type ('s' for STEP or 'f' for FAST) and press 'Enter'.  (Default: FAST) : ");
 			text = keyboard.nextLine();
 			keyboard = null;
-			if (text.indexOf('s') == 0){
+			if (text.equals("s")){
 				return true;
-			}else if(text.indexOf('f') == 0){
+			}else if(text.equals("f")){
 				return false;
 			}else if (text.length() == 0){
 				return false;
@@ -463,5 +494,8 @@ public class program {
 				System.exit(0); text = null; return false;
 			}
 			
+	}
+	public static void turingMachineGridWorldMode(){
+		
 	}
 }
