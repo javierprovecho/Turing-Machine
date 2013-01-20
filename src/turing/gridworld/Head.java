@@ -13,7 +13,7 @@
  * 			
  * 
  * 		Repository located at:
- * 			http://www.github.com/javierprovecho/Turing
+ * 			http://www.github.com/javierprovecho/Turing-Machine/
  * 
  * 		License avalaible here:
  * 			http://creativecommons.org/licenses/by-sa/3.0/
