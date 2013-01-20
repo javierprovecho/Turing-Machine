@@ -10,7 +10,7 @@
  * 			1st Grade Student of Computer Science at University of Valladolid, Spain.
  * 
  * 		Documentation avalaible at:
- * 			
+ * 			http://github.com/javierprovecho/Turing-Machine/blob/dev/include/Documentacion.docx
  * 
  * 		Repository located at:
  * 			http://www.github.com/javierprovecho/Turing-Machine/
