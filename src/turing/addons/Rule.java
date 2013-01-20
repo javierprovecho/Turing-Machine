@@ -1,3 +1,4 @@
+package turing.addons;
 public class Rule {
     public int q = 1;
     public char e = 'h';
