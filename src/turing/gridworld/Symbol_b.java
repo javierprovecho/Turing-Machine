@@ -3,11 +3,11 @@
  * 
  * 		------------------------------------------------------------------------------------
  * 
- * 		Developed and in-line comented by Javier Provecho Fernandez.
- * 			1st Grade Student of Computer Science at University of Valladolid, Spain.
- * 		
- * 		Documented by Alejandro Garcia Gutierrez.
- * 			1st Grade Student of Computer Science at University of Valladolid, Spain.
+ * 		Developed, in-line comented and documented by:
+ * 			Javier Provecho Fernandez.
+ * 				1st Grade Student of Computer Science at University of Valladolid, Spain.
+ * 			Alejandro Garcia Gutierrez.
+ * 				1st Grade Student of Computer Science at University of Valladolid, Spain.
  * 
  * 		Documentation avalaible at:
  * 			http://github.com/javierprovecho/Turing-Machine/blob/dev/include/Documentacion.docx

@@ -3,11 +3,11 @@
  * 
  * 		------------------------------------------------------------------------------------
  * 
- * 		Developed and in-line comented by Javier Provecho Fernandez.
- * 			1st Grade Student of Computer Science at University of Valladolid, Spain.
- * 		
- * 		Documented by Alejandro Garcia Gutierrez.
- * 			1st Grade Student of Computer Science at University of Valladolid, Spain.
+ * 		Developed, in-line comented and documented by:
+ * 			Javier Provecho Fernandez.
+ * 				1st Grade Student of Computer Science at University of Valladolid, Spain.
+ * 			Alejandro Garcia Gutierrez.
+ * 				1st Grade Student of Computer Science at University of Valladolid, Spain.
  * 
  * 		Documentation avalaible at:
  * 			http://github.com/javierprovecho/Turing-Machine/blob/dev/include/Documentacion.docx
@@ -44,8 +44,7 @@ import info.gridworld.actor.Bug;
 import info.gridworld.grid.Location;
 public class Head extends Bug {    
     public static ArrayList<Rule> ruleList;
-    public static boolean halted = false;
-    public static int turingMachineStatus = 1;
+    public int turingMachineStatus = 1;
     public Head(ArrayList<Rule> ruleListParameter) {
     	ruleList = ruleListParameter;
     	ruleListParameter = null;
@@ -159,7 +158,7 @@ public class Head extends Bug {
 						moveLeft();
 					}
 				
-	    	}catch(Exception e){System.out.println("Halted!"+e);}
+	    	}catch(Exception e){System.out.println("Halted!");}
 	
     }
 }

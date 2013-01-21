@@ -3,14 +3,14 @@
  * 
  * 		------------------------------------------------------------------------------------
  * 
- * 		Developed and in-line comented by Javier Provecho Fernandez.
- * 			1st Grade Student of Computer Science at University of Valladolid, Spain.
- * 		
- * 		Documented by Alejandro Garcia Gutierrez.
- * 			1st Grade Student of Computer Science at University of Valladolid, Spain.
+ * 		Developed, in-line comented and documented by:
+ * 			Javier Provecho Fernandez.
+ * 				1st Grade Student of Computer Science at University of Valladolid, Spain.
+ * 			Alejandro Garcia Gutierrez.
+ * 				1st Grade Student of Computer Science at University of Valladolid, Spain.
  * 
  * 		Documentation avalaible at:
- * 			http://github.com/javierprovecho/Turing-Machine/blob/dev/include/Documentacion.docx
+ * 			http://github.com/javierprovecho/Turing-Machine/blob/RC2/RC2/documentacion.pdf
  * 
  * 		Repository located at:
  * 			http://www.github.com/javierprovecho/Turing-Machine/
@@ -36,6 +36,7 @@
  * 
  * 		Imports:
  * 
+ * 		java.awt.Color						as color manager
  * 		java.io.File						as file reader
  * 		java.util.ArrayList 				as array constructor
  * 		java.util.Scanner					as file scanner and input reader/scanner
@@ -47,19 +48,10 @@
  * 		info.gridworld.grid.UnboundedGrid	GridWorld related
  * 
  * 		------------------------------------------------------------------------------------
- * 
- * 		Default program description:
- * 
- * 		1 1 1 0 1
- * 		1 0 1 1 1
- * 
- * 		This program runs from left to right, converting 0 to 1 and viceversa. It halts when
- * 		it reaches any symbol different of 0 or 1.
- * 
- * 		------------------------------------------------------------------------------------
  */
 
 package turing.main;
+import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -91,7 +83,7 @@ public class program {
 		 * Call parseFileTo method
 		 */
 			
-			parseFileTo();
+			parseFile();
 	
 		/*
 		 * Call validate method
@@ -134,7 +126,7 @@ public class program {
 			}catch (Exception e){}
 
 	}
-	public static void parseFileTo(){
+	public static void parseFile(){
 		
 		/*
 		 * Create initial objects and variables
@@ -210,7 +202,7 @@ public class program {
 		 * Create initial objects and variables
 		 */
 			
-			Scanner keyboard0 = new Scanner(System.in); String text = null;
+			Scanner keyboard = new Scanner(System.in); String text = null;
 			
 		/*
 		 * Ask user to type path to rule list's file.
@@ -220,7 +212,7 @@ public class program {
 			
 			System.out.print("\n\nType path for rule list's file and press 'Enter'. (Default: rules.txt) : ");
 			try{
-				text = keyboard0.nextLine();
+				text = keyboard.nextLine();
 				if(text.length()==0){
 					text = "DEFAULT";
 				}
@@ -235,7 +227,7 @@ public class program {
 		 * Close resources and return string 'text'.
 		 */
 			
-			keyboard0 = null;
+			keyboard = null;
 			return text;
 			
 	}
@@ -337,7 +329,7 @@ public class program {
 				}
 			}
 			catch(Exception e){
-				System.out.println(e+"Wrong tape composition. Closing...1");
+				System.out.println(e+"Wrong tape composition. Closing...");
 				System.exit(0);
 			}
 			
@@ -373,7 +365,7 @@ public class program {
 				return true;
 			}else{
 				System.out.println("Wrong type. Closing...");
-				System.exit(0); text = null; return false;
+				System.exit(0); keyboard = null; text = null; return false;
 			}
 			
 	}
@@ -510,7 +502,7 @@ public class program {
 				return false;
 			}else{
 				System.out.println("Wrong type. Closing...");
-				System.exit(0); text = null; return false;
+				System.exit(0); keyboard = null; text = null; return false;
 			}
 			
 	}
@@ -547,8 +539,16 @@ public class program {
 		/*
 		 * Create head
 		 */
-
-	        world.add(new Location(1, 0), new Head(ruleList));
+			new Symbol_0();
+			new Symbol_1();
+			new Symbol_a();
+			new Symbol_b();
+			new Symbol_h();
+			new Symbol_x();
+			new Symbol_y();
+			Head head = new Head(ruleList);
+			head.setColor(new Color(255,204,102));
+	        world.add(new Location(1, 0), head);
 	        
 	    /*
 	     * Show world
