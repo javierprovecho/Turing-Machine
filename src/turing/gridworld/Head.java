@@ -49,6 +49,8 @@ public class Head extends Bug {
     	ruleList = ruleListParameter;
     	ruleListParameter = null;
 	}
+    public Head() {
+	}
     public void moveLeft(){
     	setDirection(getDirection()-90);
     	moveTo(getLocation().getAdjacentLocation(getDirection()));
@@ -78,7 +80,7 @@ public class Head extends Bug {
 		    	 */
 		    		
 		    		char headSymbol = 'h';
-		    		Location headFacing = new Location(0, this.getLocation().getCol());
+		    		Location headFacing = new Location(this.getLocation().getRow()-1, this.getLocation().getCol());
 		        
 		    	/*
 		    	 * Read head symbol
@@ -159,6 +161,7 @@ public class Head extends Bug {
 					}
 				
 	    	}catch(Exception e){System.out.println("Halted!");}
+	    	//info.gridworld.gui.GUIController.stop();
 	
     }
 }
